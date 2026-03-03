@@ -241,9 +241,18 @@ section:last-child { border-bottom: none; }
 
 .hero-venue {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--text-muted);
   margin-bottom: 32px;
   margin-top: -8px;
+}
+
+.venue-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-right: 6px;
 }
 
 .gradient-text {
