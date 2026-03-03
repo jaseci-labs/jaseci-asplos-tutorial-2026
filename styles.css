@@ -849,23 +849,38 @@ h2 {
 /* Organizers Grid */
 .organizers-grid {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.organizers-row {
+  display: flex;
+  flex-direction: row !important;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
   gap: 24px;
-  margin-top: 40px;
+  width: 100%;
 }
 
 .organizer-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 20px;
+  padding: 20px 16px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
   color: inherit;
-  display: block;
-  max-width: 200px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  min-height: 160px;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .organizer-card:hover {
@@ -886,6 +901,7 @@ h2 {
   border: 3px solid var(--bg-card);
   box-shadow: var(--shadow-md), 0 0 0 2px var(--border-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
 }
 
 .photo-placeholder:hover {
@@ -900,11 +916,16 @@ h2 {
   object-position: 55% 30%;
 }
 
-.organizer-card h3 { font-size: 1rem; margin-bottom: 4px; }
+.organizer-card h3 { 
+  font-size: 0.9rem; 
+  margin-bottom: 4px; 
+  word-wrap: break-word;
+  line-height: 1.3;
+}
 
 .organizer-card .affiliation {
   color: var(--primary-color);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   margin-bottom: 8px;
 }
