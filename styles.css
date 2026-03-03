@@ -239,6 +239,13 @@ section:last-child { border-bottom: none; }
   margin-bottom: 32px;
 }
 
+.hero-venue {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 32px;
+  margin-top: -8px;
+}
+
 .gradient-text {
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   background-clip: text;
