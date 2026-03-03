@@ -1,500 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jaseci Tutorial — ASPLOS 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --amber: #f59e0b;
-    --amber-light: #fbbf24;
-    --orange: #ea580c;
-    --bg: #0f1117;
-    --bg-card: #161820;
-    --border: rgba(255,255,255,0.07);
-    --text: #c9cdd5;
-    --dim: #6b7080;
-    --bright: #eef0f4;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaseci ASPLOS 2026 Tutorial</title>
+  <meta name="description" content="ASPLOS 2026 Tutorial on Jaseci: An Open-Source AI-Native Language and Runtime Stack.">
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg); color: var(--text);
-    line-height: 1.7; font-size: 15px;
-  }
-
-  a { color: var(--amber); text-decoration: none; transition: color 0.2s; }
-  a:hover { color: var(--amber-light); }
-
-  /* ═══ CONTENT ═══ */
-  .content {
-    max-width: 820px; margin: 0 auto;
-    padding: 48px 32px 80px;
-  }
-
-  .anchor {
-    display: block; position: relative;
-    top: -32px; visibility: hidden;
-  }
-
-  /* ── Hero ── */
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(245,158,11,0.08);
-    border: 1px solid rgba(245,158,11,0.22);
-    border-radius: 20px; padding: 5px 15px;
-    font-size: 11.5px; font-weight: 600;
-    color: var(--amber); letter-spacing: 0.04em;
-    margin-bottom: 20px;
-  }
-
-  .pulse-dot {
-    width: 6px; height: 6px;
-    background: var(--amber); border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-  }
-
-  h1 {
-    font-size: 38px; font-weight: 800;
-    line-height: 1.14; color: var(--bright);
-    margin-bottom: 10px; letter-spacing: -0.025em;
-  }
-
-  h1 .accent { color: var(--amber); }
-
-  .hero-sub {
-    font-size: 19px; color: var(--dim);
-    font-weight: 500; margin-bottom: 12px;
-  }
-
-  .hero-meta {
-    font-size: 13.5px; color: var(--dim); margin-bottom: 24px;
-  }
-
-  .hero-meta strong { color: var(--text); font-weight: 600; }
-
-  /* ═══ JASECI LINK ═══ */
-  .jaseci-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 18px;
-    background: rgba(245,158,11,0.06);
-    border: 1px solid rgba(245,158,11,0.2);
-    border-radius: 9px;
-    margin-bottom: 40px;
-    transition: all 0.25s;
-    color: var(--amber);
-    font-size: 14px; font-weight: 600;
-  }
-
-  .jaseci-link:hover {
-    background: rgba(245,158,11,0.12);
-    border-color: rgba(245,158,11,0.4);
-    color: var(--amber-light);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(245,158,11,0.1);
-  }
-
-  .jaseci-link svg {
-    width: 14px; height: 14px;
-    transition: transform 0.2s;
-  }
-
-  .jaseci-link:hover svg { transform: translateX(2px); }
-
-  /* ── Section headings ── */
-  h2 {
-    font-size: 22px; font-weight: 700;
-    color: var(--bright);
-    margin: 48px 0 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    letter-spacing: -0.01em;
-  }
-
-  p { margin-bottom: 14px; }
-
-  /* ── Learn list ── */
-  .learn-list {
-    list-style: none;
-    display: flex; flex-direction: column; gap: 8px;
-    margin: 10px 0 16px;
-  }
-
-  .learn-list li {
-    display: flex; gap: 10px; align-items: baseline;
-    font-size: 14px; color: var(--text); line-height: 1.6;
-  }
-
-  .learn-list .marker {
-    width: 22px; height: 22px; min-width: 22px;
-    background: rgba(245,158,11,0.1);
-    border: 1px solid rgba(245,158,11,0.2);
-    border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--amber);
-    margin-top: 1px;
-  }
-
-  .learn-list li strong { color: var(--bright); }
-
-  /* ── Theme cards ── */
-  .theme-cards {
-    display: flex; flex-direction: column;
-    gap: 14px; margin: 16px 0;
-  }
-
-  .theme-card {
-    border-radius: 12px; padding: 20px 24px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .theme-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-  }
-
-  .theme-card.t1 {
-    background: rgba(245,158,11,0.05);
-    border: 1px solid rgba(245,158,11,0.16);
-  }
-
-  .theme-card.t2 {
-    background: rgba(234,88,12,0.05);
-    border: 1px solid rgba(234,88,12,0.16);
-  }
-
-  .tc-label {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .t1 .tc-label { color: var(--amber); }
-  .t2 .tc-label { color: var(--orange); }
-
-  .tc-title {
-    font-size: 18px; font-weight: 700;
-    color: var(--bright); margin-bottom: 2px;
-  }
-
-  .tc-audience {
-    font-size: 12px; color: var(--dim);
-    font-style: italic; margin-bottom: 8px;
-  }
-
-  .tc-desc { font-size: 14px; color: var(--text); line-height: 1.6; }
-
-  .code-hl {
-    font-family: 'JetBrains Mono', monospace;
-    background: rgba(245,158,11,0.1);
-    border: 1px solid rgba(245,158,11,0.16);
-    border-radius: 4px; padding: 1px 6px;
-    font-size: 12.5px; color: var(--amber-light);
-  }
-
-  .bullet-list {
-    list-style: none;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-
-  .bullet-list li {
-    display: flex; gap: 10px; align-items: baseline;
-    font-size: 14px; color: var(--text); line-height: 1.55;
-  }
-
-  .bullet-list li::before {
-    content: ''; width: 5px; height: 5px; min-width: 5px;
-    background: var(--orange); border-radius: 50%;
-    margin-top: 8px;
-  }
-
-  .bullet-list li strong { color: #fdba74; font-weight: 600; }
-
-  /* ── Stats ── */
-  .stats-row {
-    display: flex; gap: 36px; flex-wrap: wrap;
-    padding: 16px 0; margin: 12px 0 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-val {
-    font-size: 26px; font-weight: 800;
-    color: var(--amber); letter-spacing: -0.02em;
-  }
-
-  .stat-lbl {
-    font-size: 11px; color: var(--dim);
-    text-transform: uppercase; letter-spacing: 0.05em;
-    margin-top: 1px;
-  }
-
-  /* ── Resources ── */
-  .resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 12px; margin: 16px 0;
-  }
-
-  .resource-card {
-    display: flex; flex-direction: column;
-    padding: 18px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px; transition: all 0.25s;
-  }
-
-  .resource-card:hover {
-    border-color: rgba(245,158,11,0.3);
-    background: rgba(245,158,11,0.03);
-    transform: translateY(-2px);
-  }
-
-  .rc-title { font-size: 14px; font-weight: 700; color: var(--bright); margin-bottom: 4px; }
-  .rc-desc { font-size: 12.5px; color: var(--dim); line-height: 1.45; }
-
-  /* ── Schedule ── */
-  .schedule-tbd {
-    text-align: center; padding: 36px 20px;
-    border: 1px dashed rgba(245,158,11,0.22);
-    border-radius: 12px;
-    background: rgba(245,158,11,0.02);
-    margin: 16px 0;
-  }
-
-  .schedule-tbd h3 {
-    font-size: 17px; font-weight: 700;
-    color: var(--bright); margin: 0 0 6px;
-  }
-
-  .schedule-tbd p { color: var(--dim); font-size: 13.5px; margin: 0; }
-
-  /* ── CTA ── */
-  .cta-block {
-    text-align: center; padding: 36px 28px;
-    background: linear-gradient(180deg, rgba(245,158,11,0.07) 0%, rgba(245,158,11,0.02) 100%);
-    border: 1px solid rgba(245,158,11,0.18);
-    border-radius: 14px; margin: 40px 0 32px;
-  }
-
-  .cta-block p { font-size: 14.5px; color: var(--text); margin-bottom: 18px; }
-
-  .cta-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 32px;
-    background: linear-gradient(135deg, var(--amber), var(--orange));
-    color: #0f1117;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px; font-weight: 700;
-    border-radius: 10px; transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(245,158,11,0.25);
-  }
-
-  .cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(245,158,11,0.4);
-    color: #0f1117;
-  }
-
-  .cta-btn svg { width: 15px; height: 15px; }
-
-  /* ── Organizers ── */
-  .organizers-placeholder {
-    padding: 20px; background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px; color: var(--dim);
-    font-size: 13.5px; margin: 16px 0;
-  }
-
-  /* ── Details ── */
-  .details-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 16px; margin: 16px 0;
-  }
-
-  .detail-label {
-    font-size: 10px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--dim); margin-bottom: 3px;
-  }
-
-  .detail-value { font-size: 14.5px; font-weight: 500; color: var(--text); }
-
-  /* ── NSF ── */
-  .nsf-badge {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 12px 18px;
-    border: 1px solid rgba(245,158,11,0.18);
-    border-radius: 8px;
-    background: rgba(245,158,11,0.04);
-    font-size: 13px; font-weight: 600;
-    color: var(--amber); margin: 24px 0;
-  }
-
-  /* ── Footer ── */
-  .footer {
-    margin-top: 40px; padding: 20px 0;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap; gap: 10px;
-  }
-
-  .footer-left { font-size: 12px; color: var(--dim); }
-  .footer-links { display: flex; gap: 14px; }
-
-  .footer-links a {
-    font-size: 11.5px; font-weight: 600;
-    color: var(--dim);
-    text-transform: uppercase; letter-spacing: 0.04em;
-  }
-
-  /* ═══ MOBILE ═══ */
-  @media (max-width: 640px) {
-    .content { padding: 32px 18px 60px; }
-    h1 { font-size: 28px !important; }
-    .hero-sub { font-size: 16px !important; }
-    .stats-row { gap: 20px; }
-    .resource-grid, .details-grid { grid-template-columns: 1fr; }
-  }
-</style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="app-layout">
 
-<div class="content">
-
-  <!-- HERO -->
-  <div class="hero-badge">
-    <span class="pulse-dot"></span>
-    ASPLOS 2026 Tutorial &middot; Mar 22 (Sunday) &middot; Half-Day Morning
-  </div>
-
-  <h1><span class="accent">Jaseci:</span> An Open-Source AI-Native Language and Runtime Stack</h1>
-  <div class="hero-sub">From Agentic AI Development to Systems Research</div>
-  <div class="hero-meta">
-    <strong>Mar 22, 2026</strong> &middot; Morning Session &middot; The Landing Hotel &middot;
-    <a href="https://www.asplos-conference.org/asplos2026/workshops-and-tutorials/" target="_blank">ASPLOS '26 @ Pittsburgh</a>
-  </div>
-
-  <a href="https://www.jaseci.org/" class="jaseci-link" target="_blank" rel="noopener">
-    www.jaseci.org — Docs, tutorials &amp; community
-    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd"/></svg>
-  </a>
-
-  <!-- ABSTRACT -->
-  <span class="anchor" id="abstract"></span>
-  <h2>Abstract</h2>
-  <p>
-    Agentic AI development is broken. Too many tools, too many languages, too much glue code.
-    <strong>Jaseci</strong> fixes this: an open-source language and runtime extending Python with native AI
-    and scaling constructs. Prompt less, smile more, no need for DevOps.
-  </p>
-  <p>In this tutorial, you will learn:</p>
-  <ul class="learn-list">
-    <li><span class="marker">a</span> How to build multi-agent AI systems using Jaseci's graph-based walker paradigm with <strong>zero boilerplate</strong></li>
-    <li><span class="marker">b</span> How the <span class="code-hl">by llm()</span> construct lets <strong>the compiler write prompts</strong> for you</li>
-    <li><span class="marker">c</span> How Jaseci <strong>auto-deploys</strong> from laptop to Kubernetes with zero DevOps configuration</li>
-    <li><span class="marker">d</span> How Jaseci's Python-transpiling frontend <strong>fixes PyTorch 2 FX graph breaks</strong> for ML compiler research</li>
-  </ul>
-
-  <!-- THEMES -->
-  <span class="anchor" id="themes"></span>
-  <h2>Tutorial Themes</h2>
-  <div class="theme-cards">
-    <div class="theme-card t1">
-      <div class="tc-label">Theme 1</div>
-      <div class="tc-title">Hands-On Agentic AI Development</div>
-      <div class="tc-audience">For developers and students</div>
-      <div class="tc-desc">Write <span class="code-hl">by llm()</span> and the compiler writes the prompts. Build multi-agent systems with walkers on graphs. Zero boilerplate.</div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">JASECI TUTORIAL</div>
+      <button id="mobile-close-btn" class="icon-btn" aria-label="Close Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
-    <div class="theme-card t2">
-      <div class="tc-label">Theme 2</div>
-      <div class="tc-title">Research the Jaseci Stack Enables</div>
-      <div class="tc-audience">For students and researchers</div>
-      <ul class="bullet-list">
-        <li><strong>Agentic AI</strong> &mdash; Native language constructs for multi-agent systems</li>
-        <li><strong>Auto-Deploy &amp; Scale</strong> &mdash; Laptop to Kubernetes, zero config. Auto monolith-to-microservice</li>
-        <li><strong>ML Compilers</strong> &mdash; Python-transpiling frontend that fixes PyTorch 2 FX graph breaks</li>
-      </ul>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <h3 class="nav-title">tutorial</h3>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">ASPLOS'26@Pittsburgh</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <h3 class="nav-title">sections</h3>
+        <ul class="nav-links">
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#organizers">Organizers</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <h3 class="nav-title">links</h3>
+        <ul class="nav-links">
+          <li><a href="https://www.jaseci.org/" target="_blank" rel="noopener">Jaseci.org ↗</a></li>
+          <li><a href="https://github.com/jaseci-labs/jaseci" target="_blank" rel="noopener">GitHub ↗</a></li>
+          <li><a href="https://www.asplos-conference.org/asplos2026/workshops-and-tutorials/" target="_blank" rel="noopener">ASPLOS 2026 ↗</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-bar">
+      <button id="mobile-menu-btn" class="icon-btn" aria-label="Open Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+
+      <div class="header-title">ASPLOS 2026 Tutorial</div>
+
+      <div class="top-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+      <article class="doc-content">
+
+        <!-- Hero / Abstract -->
+        <section id="abstract" class="hero-section">
+          <h1>Jaseci: An Open-Source AI-Native Language and Runtime Stack</h1>
+          <p class="subtitle"><span class="gradient-text">Mar 22 · Morning Session · ASPLOS'26</span></p>
+          <p class="hero-meta">
+            <strong>March 22, 2026</strong> &middot; Half-Day Morning &middot; The Landing Hotel &middot;
+            <a href="https://www.asplos-conference.org/asplos2026/workshops-and-tutorials/" target="_blank">ASPLOS '26 @ Pittsburgh</a>
+          </p>
+
+          <a href="https://www.jaseci.org/" class="jaseci-cta" target="_blank" rel="noopener">
+            Visit Jaseci.org — Docs, tutorials &amp; community
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd"/></svg>
+          </a>
+
+          <div class="text-block">
+            <p>
+              Agentic AI development is broken. Too many tools, too many languages, too much glue code.
+              <strong>Jaseci</strong> fixes this: an open-source language and runtime extending Python with native AI
+              and scaling constructs. Write less, build more — no boilerplate, no DevOps, no manual prompts.
+            </p>
+            <p>In this tutorial, you will learn:</p>
+            <ul>
+              <li><strong>(a)</strong> How to build multi-agent AI systems using Jaseci's graph-based walker paradigm with <strong>zero boilerplate</strong></li>
+              <li><strong>(b)</strong> How the <code>by llm()</code> construct lets <strong>the compiler write prompts</strong> for you</li>
+              <li><strong>(c)</strong> How Jaseci <strong>auto-deploys</strong> from laptop to Kubernetes with zero DevOps configuration</li>
+              <li><strong>(d)</strong> How Jaseci's Python-transpiling frontend <strong>fixes PyTorch 2 FX graph breaks</strong> for ML compiler research</li>
+            </ul>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-val">100K+</div>
+              <div class="stat-lbl">Monthly PyPI Downloads</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">10&times;</div>
+              <div class="stat-lbl">Code Reduction</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">0</div>
+              <div class="stat-lbl">Prompts Required</div>
+            </div>
+          </div>
+
+          <div class="nsf-badge">NSF POSE Funded &nbsp;&bull;&nbsp; Open-Source Ecosystem</div>
+
+          <div class="cta-block">
+            <p>Interested in attending? Let us know so we can plan accordingly and keep you updated.</p>
+            <a href="https://sites.google.com/view/cryptorch-asplos-2026-tutorial" class="cta-btn" target="_blank" rel="noopener">
+              Let us know if you are interested!
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
+            </a>
+          </div>
+        </section>
+
+        <!-- Resources -->
+        <section id="resources">
+          <h2>Jaseci Resources</h2>
+          <div class="resources-grid">
+            <a href="https://www.jaseci.org/" class="resource-card" target="_blank" rel="noopener">
+              <h3>Jaseci.org</h3>
+              <p>Official website — documentation, guides, tutorials, and community for the Jaseci ecosystem.</p>
+            </a>
+            <a href="https://github.com/jaseci-labs/jaseci" class="resource-card" target="_blank" rel="noopener">
+              <h3>Jaseci on GitHub</h3>
+              <p>The core open-source AI-native language and runtime stack. Star the repo and contribute.</p>
+            </a>
+            <a href="https://www.asplos-conference.org/asplos2026/workshops-and-tutorials/" class="resource-card" target="_blank" rel="noopener">
+              <h3>ASPLOS 2026</h3>
+              <p>Official ASPLOS 2026 workshops and tutorials page at Pittsburgh, March 2026.</p>
+            </a>
+          </div>
+        </section>
+
+        <!-- Schedule -->
+        <section id="schedule">
+          <h2>Agenda (Mar 22, 2026, ASPLOS'26)</h2>
+          <div class="timeline-tbd">
+            <h3>Schedule Coming Soon</h3>
+            <p>Detailed agenda for the half-day morning session will be posted here. Stay tuned!</p>
+          </div>
+        </section>
+
+        <!-- Organizers -->
+        <section id="organizers">
+          <h2>Organizers</h2>
+          <div class="organizers-grid">
+            <div class="organizer-card">
+              <div class="photo-placeholder"></div>
+              <h3>Organizer Name</h3>
+              <p class="affiliation">Institution</p>
+              <p class="bio">Organizer profiles will be added here soon. Check back for updates!</p>
+            </div>
+          </div>
+        </section>
+
+      </article>
+
+      <aside class="on-this-page">
+        <h4>On this page</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#organizers">Organizers</a></li>
+        </ul>
+      </aside>
     </div>
-  </div>
 
-  <div class="stats-row">
-    <div class="stat-item"><div class="stat-val">100K+</div><div class="stat-lbl">Monthly PyPI Downloads</div></div>
-    <div class="stat-item"><div class="stat-val">10&times;</div><div class="stat-lbl">Code Reduction</div></div>
-    <div class="stat-item"><div class="stat-val">0</div><div class="stat-lbl">Prompts Required</div></div>
-  </div>
-
-  <!-- RESOURCES -->
-  <span class="anchor" id="resources"></span>
-  <h2>Jaseci Resources</h2>
-  <div class="resource-grid">
-    <a href="https://github.com/jaseci-labs/jaseci" class="resource-card" target="_blank" rel="noopener">
-      <div class="rc-title">Jaseci on GitHub</div>
-      <div class="rc-desc">The core open-source AI-native language and runtime stack.</div>
-    </a>
-    <a href="https://www.jaseci.org/" class="resource-card" target="_blank" rel="noopener">
-      <div class="rc-title">Jaseci.org</div>
-      <div class="rc-desc">Official website &mdash; documentation, guides, and community.</div>
-    </a>
-  </div>
-
-  <!-- SCHEDULE -->
-  <span class="anchor" id="schedule"></span>
-  <h2>Agenda (Mar 22, 2026, ASPLOS '26)</h2>
-  <div class="schedule-tbd">
-    <h3>Schedule Coming Soon</h3>
-    <p>Detailed agenda for the half-day morning session will be posted here. Stay tuned!</p>
-  </div>
-
-  <!-- ORGANIZERS -->
-  <span class="anchor" id="organizers"></span>
-  <h2>Organizers</h2>
-  <div class="organizers-placeholder">
-    Organizer profiles will be added here soon. Check back for updates!
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-block">
-    <p>Interested in attending? Let us know so we can plan accordingly and keep you updated.</p>
-    <a href="https://sites.google.com/view/cryptorch-asplos-2026-tutorial" class="cta-btn" target="_blank" rel="noopener">
-      Let us know if you are interested!
-      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
-    </a>
-  </div>
-
-  <!-- DETAILS -->
-  <span class="anchor" id="details"></span>
-  <h2>Details</h2>
-  <div class="details-grid">
-    <div><div class="detail-label">Date</div><div class="detail-value">March 22, 2026 &bull; Morning Session</div></div>
-    <div><div class="detail-label">Venue</div><div class="detail-value">The Landing Hotel</div></div>
-    <div><div class="detail-label">Website</div><div class="detail-value"><a href="https://www.jaseci.org/" target="_blank">www.jaseci.org</a></div></div>
-    <div><div class="detail-label">GitHub</div><div class="detail-value"><a href="https://github.com/jaseci-labs/jaseci" target="_blank">github.com/jaseci-labs/jaseci</a></div></div>
-  </div>
-
-  <div class="nsf-badge">NSF POSE funded &nbsp;&bull;&nbsp; Open-source ecosystem</div>
-
-  <div class="footer">
-    <div class="footer-left">&copy; 2026 Jaseci ASPLOS Tutorial</div>
-    <div class="footer-links">
-      <a href="https://www.jaseci.org/" target="_blank">Jaseci</a>
-      <a href="https://www.asplos-conference.org/asplos2026/workshops-and-tutorials/" target="_blank">ASPLOS 2026</a>
-      <a href="https://github.com/jaseci-labs/jaseci" target="_blank">GitHub</a>
-    </div>
-  </div>
-
+    <footer class="site-footer">
+      <p>&copy; 2026 Jaseci ASPLOS Tutorial &middot;
+        <a href="https://www.jaseci.org/" target="_blank">Jaseci.org</a> &middot;
+        <a href="https://github.com/jaseci-labs/jaseci" target="_blank">GitHub</a>
+      </p>
+    </footer>
+  </main>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
