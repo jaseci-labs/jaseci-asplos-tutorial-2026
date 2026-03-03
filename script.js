@@ -50,15 +50,28 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(current => {
       const sectionTop = current.offsetTop - 100;
       const sectionId = current.getAttribute('id');
+      
+      // Sidebar navigation
       const navLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
-      if (navLink) {
-        if (scrollY > sectionTop && scrollY <= sectionTop + current.offsetHeight) {
+      // On this page navigation
+      const onThisPageLink = document.querySelector(`.on-this-page a[href="#${sectionId}"]`);
+      
+      if (scrollY > sectionTop && scrollY <= sectionTop + current.offsetHeight) {
+        // Update sidebar nav
+        if (navLink) {
           document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => a.classList.remove('active'));
           navLink.classList.add('active');
+        }
+        // Update on this page nav
+        if (onThisPageLink) {
+          document.querySelectorAll('.on-this-page a').forEach(a => a.classList.remove('active'));
+          onThisPageLink.classList.add('active');
         }
       }
     });
   }
 
   window.addEventListener('scroll', highlightNavigation);
+  // Run once on load to highlight initial section
+  highlightNavigation();
 });
