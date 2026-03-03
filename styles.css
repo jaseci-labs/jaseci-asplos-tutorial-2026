@@ -733,6 +733,65 @@ h2 {
   margin: 0;
 }
 
+/* Research Papers List */
+.papers-section {
+  margin-top: 40px;
+}
+
+.papers-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.papers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.papers-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.papers-list li:hover {
+  border-color: var(--primary-color);
+  background: rgba(245, 158, 11, 0.03);
+}
+
+.paper-icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  color: var(--primary-color);
+  margin-top: 2px;
+}
+
+.papers-list a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.2s;
+}
+
+.papers-list a:hover {
+  color: var(--primary-color);
+}
+
 /* Timeline / Schedule */
 .timeline {
   margin-top: 32px;
