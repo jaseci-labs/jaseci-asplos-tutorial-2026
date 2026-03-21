@@ -198,9 +198,48 @@
         <!-- Schedule -->
         <section id="schedule">
           <h2>Agenda (Mar 22, 2026, ASPLOS'26)</h2>
-          <div class="timeline-tbd">
-            <h3>Schedule Coming Soon</h3>
-            <p>Detailed agenda for the half-day morning session will be posted here. Stay tuned!</p>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="time">9:00 – 9:30</div>
+              <div class="content">
+                <h3>Session 1: Introduction to Jaseci</h3>
+                <p>Why is building production-grade AI applications still so hard? This session examines the fundamental gaps in today's AI development stack and shows how Jaseci addresses them. We introduce the Jac language, the Jaseci runtime, and the Open Service Platform, explaining how they work together to remove boilerplate and let developers focus on logic, not infrastructure.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="time">9:30 – 10:00</div>
+              <div class="content">
+                <h3>Session 2: Agentic AI - Beyond Prompt Engineering</h3>
+                <p>Prompt engineering is fragile, repetitive, and hard to maintain. This session explores how Jaseci's <code class="code-hl">by llm()</code> construct replaces hand-crafted prompts with semantic type annotations, where the compiler infers and generates the right prompt automatically. Attendees will see how this shifts AI development from trial-and-error prompting to structured, type-safe reasoning.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="time">10:00 – 10:30</div>
+              <div class="content">
+                <h3>Coffee Break</h3>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="time">10:30 – 11:45</div>
+              <div class="content">
+                <h3>Session 3: Agentic AI - Building Real Workflows</h3>
+                <p>Designing multi-agent systems is notoriously complex. Coordinating agents, managing state, and wiring everything together creates enormous overhead. In this hands-on session, attendees build agentic workflows using Jaseci's walker-on-graph model, where agents traverse data graphs natively. The goal is to experience firsthand how much complexity Jaseci's abstractions eliminate compared to conventional approaches.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="time">11:45 – 12:30</div>
+              <div class="content">
+                <h3>Session 4: Research Frontiers</h3>
+                <p><strong>Kernel Forge:</strong> Writing GPU kernels by hand is a major barrier to optimizing deep learning models. Kernel Forge closes this gap by automatically synthesizing and tuning GPU kernels for PyTorch models, requiring no prior knowledge of CUDA or kernel programming.</p>
+                <p><strong>GraphMend:</strong> <code class="code-hl">torch.compile()</code> often silently falls back to eager mode when it encounters unsupported patterns, undermining performance. GraphMend applies source-level code transformations to detect and fix these graph breaks, ensuring models compile fully and run at peak efficiency.</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
